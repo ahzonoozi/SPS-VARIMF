@@ -128,12 +128,17 @@ Specifies the initial metallicity index:
  ### Galaxy Mass (M_galaxy or M_UCD):
  
  Defines the total stellar mass formed over time:
+ 
     • M_galaxy → Total stellar mass of a galaxy (in solar masses).
+    
     • M_UCD → Monolithic formation of ultra-compact dwarf galaxies (UCDs), following a top-heavy IMF.
 
  ### Star Formation Efficiency (f_star):
+ 
  Determines how efficiently gas converts into stars:
+ 
   f_star=M_galaxy/M_gas​​
+  
     • Valid range: 0 < f_star < 1 
 
     
