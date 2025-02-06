@@ -37,9 +37,9 @@ SUBROUTINE READ_INPUT(Zinput)
 
   !Reading different values of Zlegend from zlegend.dat file 
   IF (isoc_type == 1) THEN
-     OPEN(100, FILE='../ISOCHRONES/Padova/Padova2007/zlegend.dat', STATUS='OLD', IOSTAT=stat)
+     OPEN(100, FILE='../ISOCHRONES/Padova2007/zlegend.dat', STATUS='OLD', IOSTAT=stat)
   ELSE IF (isoc_type == 2) THEN
-     OPEN(100, FILE='../ISOCHRONES/PARSEC/PARSEC2022/zlegend.dat', STATUS='OLD', IOSTAT=stat)
+     OPEN(100, FILE='../ISOCHRONES/PARSEC2022/zlegend.dat', STATUS='OLD', IOSTAT=stat)
   ELSE
      PRINT *, "Error: Unsupported isochrone type!"
      STOP
@@ -68,13 +68,13 @@ SUBROUTINE READ_INPUT(Zinput)
      !Open corresponding isochrone file 
      !open Padova isochrones
      iF (isoc_type == 1)Then
-        OPEN(101,FILE='../ISOCHRONES/Padova/Padova2007/isoc_z'//&
+        OPEN(101,FILE='../ISOCHRONES/Padova2007/isoc_z'//&
              zstype//'.dat',STATUS='OLD', IOSTAT=stat,ACTION='READ')
      END IF
 
      !open Parsec isochrones
      iF (isoc_type == 2)Then
-        OPEN(101,FILE='../ISOCHRONES/PARSEC/PARSEC2022/isoc_z'//&
+        OPEN(101,FILE='../ISOCHRONES/PARSEC2022/isoc_z'//&
              zstype//'.dat',STATUS='OLD', IOSTAT=stat,ACTION='READ')
      END IF
      ! Check file status
