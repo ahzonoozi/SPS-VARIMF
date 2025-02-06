@@ -1,5 +1,5 @@
 # SPS-VARIMF
-
+The Stellar Population Synthesis for Varying Initial Mass Function (SPS-VARIMF) model computes stellar populations' spectral and photometric evolution across a broad parameter space, specifically accounting for variations in the Initial Mass Function (IMF).
 
 
 
