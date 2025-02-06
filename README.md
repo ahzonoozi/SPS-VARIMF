@@ -44,19 +44,37 @@ The code includes a Makefile to facilitate compilation. Before proceeding, ensur
 
 ## Adjust parameters :
 To properly configure the SPS-VARIMF model, key simulation parameters must first be defined and initialized  in  params.f90.
-       Inorder to adjust optional cases 
-         Dust attenuation (dust_atten):
+
+In order to adjust optional cases 
+       
+   ### Dust attenuation (dust_atten):
+         
                        = 0 : Disabled
+                       
                        = 1 : Enabled (power-law attenuation)
-        Remnant mass calculation (remnant_cal):
+
+                       
+   ### Remnant mass calculation (remnant_cal):
+   
                        = 0 :  Renzini et al. (1993) prescription
+                       
                        = 1 :  Spera et al. (2015) prescription
-         Metallicity evolution mode (Z_MODE):
+
+                       
+   ### Metallicity evolution mode (Z_MODE):
+   
                        = 0 : Constant metallicity 
+                       
                        = 1 : Metallicity computed at each step from gas enrichment
-         OB stars count calculation (OB_stars):
+
+                       
+   ### OB stars count calculation (OB_stars):
+   
                        = 0 : Do not compute the number of OB stars
+                       
                        = 1 : Compute the number of OB stars
+
+                       
                        
 ## Model Configuration Parameters
 Modify the simulation parameters  in the main.f90 program to setup the model. The key parameters include:
