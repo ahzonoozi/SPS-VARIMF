@@ -14,6 +14,16 @@ Dust Attenuation
 An optional dust attenuation component is included in the model, implemented using a power-law formalism to account for the wavelength-dependent absorption and scattering of light by interstellar dust. This feature allows users to incorporate the effects of dust on spectral energy distributions (SEDs) and photometric properties, providing a more realistic comparison with observed galaxy spectra.
 
 
+2. Setting Up the Model
+Before compiling, ensure that the SPS-VARIMF directory is located in the same parent directory as the following required folders:
+    • OUTPUTS
+    • SPECTRA
+    • ISOCHRONS
+    • FILTERS
+    • YIELDS
+
+
+
 For any publications or research that utilize SPS-VARIMF , please cite
 the following reference:
 
