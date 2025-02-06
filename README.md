@@ -72,7 +72,7 @@ In order to adjust optional cases
                        = 1 : Metallicity computed at each step from gas enrichment
 
                        
-   ### OB stars count calculation (OB_stars):
+   #### OB stars count calculation (OB_stars):
    
                        = 0 : Do not compute the number of OB stars    
                        = 1 : Compute the number of OB stars
@@ -83,7 +83,7 @@ In order to adjust optional cases
 
 Modify the simulation parameters  in the main.f90 program to setup the model. The key parameters include:
 
-  ### Initial Mass Function (IMF) (imf_type):
+  #### Initial Mass Function (IMF) (imf_type):
   
   Specifies the type of IMF used in the simulation:
   
@@ -91,21 +91,21 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
     = 3  : Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.  
     = 5  :Top-Heavy IMF – A flatter IMF favoring high-mass star formation.
 
- ### Isochrones (isoc_type)
+ #### Isochrones (isoc_type)
  
  Determines the stellar evolution tracks used:
  
     = 1 : Padova (2007)
     = 2 : PARSEC (2022)
 
- ### Spectral Library (spec_type)
+ #### Spectral Library (spec_type)
  
  Specifies the spectral database used for stellar populations:
  
     = 1 : BaSeL spectral library (default)
     = 2 : Miles spectral library (in progress, not yet available)
 
- ### Star Formation History (SFH) (sfh_type)
+ #### Star Formation History (SFH) (sfh_type)
  
  Defines how the galaxy forms stars over time:
  
@@ -114,7 +114,7 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
     = 2 : Exponentially Declining SFR – Star formation rate decreases exponentially. 
     = 4 : Delayed-Tau SFH – A rising SFR phase followed by exponential decline.
     
- ### Additional SFH Parameters:
+ #### Additional SFH Parameters:
  
     • e-folding timescale (tau) (for sfh_type = 2 and 4):
         ◦ Range: 0.001 – 1000.0 Gyr
@@ -123,7 +123,7 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
         ◦ Default: Tstart = 0.0, Ttrunc = 0.0
         ◦ Defined in Gyr, based on the age of the universe.
 
- ### Metallicity (zmet_ini):
+ #### Metallicity (zmet_ini):
  
 Specifies the initial metallicity index:
 
@@ -132,7 +132,7 @@ Specifies the initial metallicity index:
     • (Z_MODE=1 )  Self-enrichment: Metallicity evolves over time due to stellar feedback.
           
 
- ### Galaxy Mass (M_galaxy or M_UCD):
+ #### Galaxy Mass (M_galaxy or M_UCD):
  
  Defines the total stellar mass formed over time:
  
@@ -140,7 +140,7 @@ Specifies the initial metallicity index:
     
     • M_UCD → Monolithic formation of ultra-compact dwarf galaxies (UCDs), following a top-heavy IMF.
 
- ### Star Formation Efficiency (f_star):
+ #### Star Formation Efficiency (f_star):
  
  Determines how efficiently gas converts into stars:
  
