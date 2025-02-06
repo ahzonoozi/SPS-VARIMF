@@ -77,29 +77,47 @@ In order to adjust optional cases
                        
                        
 ## Model Configuration Parameters
+
 Modify the simulation parameters  in the main.f90 program to setup the model. The key parameters include:
-Initial Mass Function (IMF) (imf_type)
-Specifies the type of IMF used in the simulation:
+
+  ### Initial Mass Function (IMF) (imf_type)
+  
+  Specifies the type of IMF used in the simulation:
+  
     • 2 → Canonical IMF (Kroupa 2001) – A standard IMF with fixed power-law slopes.
+    
     • 3 →  Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.
+    
     • 5 →  Top-Heavy IMF – A flatter IMF favoring high-mass star formation.
 
-Isochrones (isoc_type)
-Determines the stellar evolution tracks used:
+ ### Isochrones (isoc_type)
+ 
+ Determines the stellar evolution tracks used:
+ 
     • 1 → Padova (2007)
+    
     • 2 → PARSEC (2022)
 
-Spectral Library (spec_type)
-Specifies the spectral database used for stellar populations:
+ ### Spectral Library (spec_type)
+ 
+ Specifies the spectral database used for stellar populations:
+ 
     • 1 → BaSeL spectral library (default)
+    
     • 2 → Miles spectral library (in progress, not yet available)
 
-Star Formation History (SFH) (sfh_type)
-Defines how the galaxy forms stars over time:
+ ### Star Formation History (SFH) (sfh_type)
+ 
+ Defines how the galaxy forms stars over time:
+ 
     • 0 → Single Stellar Population (SSP) – All stars form in a single burst.
+    
     • 1 → Constant Star Formation Rate (SFR) – Stars form at a steady rate over time.
+    
     • 2 → Exponentially Declining SFR – Star formation rate decreases exponentially.
+    
     • 4 → Delayed-Tau SFH – A rising SFR phase followed by exponential decline.
+    
 Additional SFH Parameters:
     • e-folding timescale (tau) (for sfh_type = 2 and 4):
         ◦ Range: 0.001 – 1000.0 Gyr
