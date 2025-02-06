@@ -91,21 +91,21 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
     = 3  : Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.  
     = 5  :Top-Heavy IMF – A flatter IMF favoring high-mass star formation.
 
- #### Isochrones (isoc_type)
+ #### Isochrones (isoc_type):
  
  Determines the stellar evolution tracks used:
  
     = 1 : Padova (2007)
     = 2 : PARSEC (2022)
 
- #### Spectral Library (spec_type)
+ #### Spectral Library (spec_type):
  
  Specifies the spectral database used for stellar populations:
  
     = 1 : BaSeL spectral library (default)
     = 2 : Miles spectral library (in progress, not yet available)
 
- #### Star Formation History (SFH) (sfh_type)
+ #### Star Formation History (SFH) (sfh_type):
  
  Defines how the galaxy forms stars over time:
  
