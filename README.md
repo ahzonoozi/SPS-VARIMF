@@ -80,9 +80,9 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
   
   Specifies the type of IMF used in the simulation:
   
-    • 2 → Canonical IMF (Kroupa 2001) – A standard IMF with fixed power-law slopes.
-    • 3 →  Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.  
-    • 5 →  Top-Heavy IMF – A flatter IMF favoring high-mass star formation.
+    = 2  : Canonical IMF (Kroupa 2001) – A standard IMF with fixed power-law slopes.
+    = 3  : Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.  
+    = 5  :Top-Heavy IMF – A flatter IMF favoring high-mass star formation.
 
  ### Isochrones (isoc_type)
  
