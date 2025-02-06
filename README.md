@@ -118,22 +118,27 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
     
     • 4 → Delayed-Tau SFH – A rising SFR phase followed by exponential decline.
     
-Additional SFH Parameters:
+ ### Additional SFH Parameters:
+ 
     • e-folding timescale (tau) (for sfh_type = 2 and 4):
         ◦ Range: 0.001 – 1000.0 Gyr
+        
     • Star formation start and truncation time (Tstart, Ttrunc):
         ◦ Default: Tstart = 0.0, Ttrunc = 0.0
         ◦ Defined in Gyr, based on the age of the universe.
 
-Metallicity (zmet_ini):
+ ### Metallicity (zmet_ini):
+ 
 Specifies the initial metallicity index:
-    • Choose a value from 1–22, corresponding to metallicity values in Table 1.
+
+    • Choose a value from 1–22, corresponding to metallicity values in Table1.
     • (Z_MODE=0 )  Constant metallicity throughout the simulation (zmet = zmet_ini).
     • (Z_MODE=1 )  Self-enrichment: Metallicity evolves over time due to stellar feedback.
           
 
-Galaxy Mass (M_galaxy or M_UCD):
-Defines the total stellar mass formed over time:
+ ### Galaxy Mass (M_galaxy or M_UCD):
+ 
+ Defines the total stellar mass formed over time:
     • M_galaxy → Total stellar mass of a galaxy (in solar masses).
     • M_UCD → Monolithic formation of ultra-compact dwarf galaxies (UCDs), following a top-heavy IMF.
 Star Formation Efficiency (f_star):
