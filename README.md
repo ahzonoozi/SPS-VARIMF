@@ -148,10 +148,13 @@ Specifies the initial metallicity index:
   
     • Valid range: 0 < f_star < 1 
 
-    
 
-For any publications or research that utilize SPS-VARIMF , please cite
-the following reference:
-
+ ##Acknowledgments
+This program is built upon extensive research in stellar population synthesis and uses publicly available codes and libraries, including Padova, PARSEC, BaSeL, GALAXEV (Bruzual & Charlot), FSPS (Flexible Stellar Population Synthesis), and others. We acknowledge the invaluable contributions of the researchers and developers who have made these resources available to the scientific community.
+SPS-VARIMF was developed by Akram Hasani Zonoozi at the Institute for Advanced Studies in Basic Sciences (IASBS).  For any publications or research that utilize SPS-VARIMF , please cite the following reference:
 Zonoozi, Haghi, and Kroupa et al. MNRAS, 2025 (https://doi.org/10.1093/mnras/staf091)
 “Stellar population synthesis models with a physically varying IMF”
+For comments, questions, bug reports, or feedback, please contact:
+ a.hasani@iasbs.ac.ir
+ e.h.zonoozi@gmail.com
+This program is free software and is distributed under an open-source license. You are free to redistribute and modify it as needed.
