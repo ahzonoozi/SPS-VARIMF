@@ -17,10 +17,15 @@ An optional dust attenuation component is included in the model, implemented usi
  ## Setting Up the Model:
    
 Before compiling, ensure that the SPS-VARIMF directory is located in the same parent directory as the following required folders:
+
     • OUTPUTS
+    
     • SPECTRA
+    
     • ISOCHRONS
+    
     • FILTERS
+    
     • YIELDS
 
 
