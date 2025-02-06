@@ -152,12 +152,12 @@ Specifies the initial metallicity index:
 ## OUTPUT Folder
 The OUTPUT/ directory stores the simulation results. It contains two main types of output files:
 
- ####1️.mags Files:
+1️.mags Files:
 
 These files store essential evolutionary parameters of the simulated stellar population, including time, stellar mass, luminosity, star formation rate, mass of remnants, mass of white dwarfs, metallicity, the ratio of gas-phase mass to total galaxy mass, and magnitudes in 143 photometric bands as listed in FILTER_LIST.dat, all recorded at each evolutionary time step.
 These .mags files are crucial for analyzing the photometric evolution of the galaxy.
 
-####2️.spec Files:
+2️.spec Files:
 
 These files contain the wavelength array and the corresponding spectra (fν) in L☉/Hz units at each evolutionary time step.
 
