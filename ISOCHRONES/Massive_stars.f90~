@@ -1,0 +1,107 @@
+PROGRAM TRACK
+
+  IMPLICIT NONE
+
+  
+
+  INTEGER ::n,i
+  REAL ::M_ini,a1,tm,a3,Tini,Lini,Lj
+  !INTEGER, PARAMETER :: SP = KIND(1.d0)
+  !REAL(SP), ALLOCATABLE, DIMENSION(:) :: spec
+  REAL, ALLOCATABLE, DIMENSION(:) :: log_t,time,mass,T_eff,Lum
+  !Real, allocatable,DIMENSION(:):: m,nn
+  !REAL, ALLOCATABLE, DIMENSION(:)::time,LOG_mass,lbol,LOG_sfr 
+  !REAL, DIMENSION(nspec:ndim_logt:ndim_logg) :: speclibinit=0.
+  !REAL(SP), ALLOCATABLE, DIMENSION(:,:) ::  spectra2
+  
+
+
+!---------------------------------
+
+  n=200
+  M_ini=120
+  
+  OPEN(400,FILE='MASSIVE_STARS_tRACK.txt')
+   
+
+
+!-----------------------------------
+ 
+  ! OPEN(400,FILE= 'spec_IGIMF_1e13_1G.txt')
+
+
+   
+
+!-------------------------------------
+     
+
+     ALLOCATE(log_t(1:n),time(1:n),mass(1:n),T_eff(1:n),Lum(1:n))
+        log_t=0.0; time=0.00 ; mass=0.0; T_eff=0.0; Lum=0.0   
+     !ALLOCATE(spectra2(1:ndim_logt,1:nspec))
+     !   spectra2=0.0 
+     !ALLOCATE(time(1:ndim_logt),LOG_mass(1:ndim_logt),lbol(1:ndim_logt),LOG_sfr(1:ndim_logt))
+     !   time=0.0; LOG_mass=0.0; lbol=0.0; LOG_sfr=0.0           
+
+
+ 
+
+  a1=1./(48.*exp(-1.*(M_ini/24.7))+3.15) 
+  tm=((exp(-1.*(M_ini/23.5))*1.25*10**7)+2.5*10**6)/10**6
+
+  IF(M_ini .GE. 60.)THEN
+    Tini = 4.3*10**(-3)*M_ini+4.425
+  ENDIF
+  IF(M_ini .LT. 60.)THEN
+    Tini =7.3333*10**(-4)*M_ini+4.64
+  ENDIF
+
+  IF(M_ini .GE. 85.)THEN
+   a3 =9.0
+  ENDIF
+  IF(M_ini .LT. 85.)THEN
+    a3 =-0.182857142*M_ini+24.54285719
+  ENDIF
+
+
+  Lini=M_ini/(0.145590532*M_ini+1.722994092)
+  Lj=exp((9*10**(-3))/(Lini**2.5))+3.95
+
+
+  WRITE(*,*)a1 
+
+  DO i=1,n
+          
+     log_t(i)=5.50+(i-1)*0.01    
+    
+      time(i)=10.** (log_t(i)-6.)
+
+      mass(i) = M_ini *exp(-1.*(a1*time(i))**2.)
+      T_eff(i) = Tini*exp(-1.*(time(i)/a3)**2.3)
+      Lum(i) = ((Lj-Lini)/tm)*time(i)+Lini 
+    
+    
+  ENDDO
+
+!-------------------------------------
+
+  
+       
+
+     DO i = 1, n
+
+
+        IF(time(i) .LE. tm)THEN        
+           WRITE(400,*)time(i),mass(i),T_eff(i),Lum(i)    !corresponds to 1 Gyr
+        ENDIF
+
+     ENDDO   
+
+ 
+ CLOSE(400)
+ !CLOSE(400)
+
+END PROGRAM TRACK
+
+
+
+
