@@ -17,7 +17,8 @@ An optional dust attenuation component is included in the model, implemented usi
  ## Setting Up the Model:
    
 Before compiling, ensure that the SPS-VARIMF directory is located in the same parent directory as the following required folders:
-Please extract both BaSeL_1.zip and BaSeL_2.zip in 
+
+Please extract both BaSeL_1.zip and BaSeL_2.zip in SPECTRA/BaSeL3.1/ directory
     • OUTPUTS
     
     • SPECTRA
@@ -27,6 +28,12 @@ Please extract both BaSeL_1.zip and BaSeL_2.zip in
     • FILTERS
     
     • YIELD
+
+ Extract both BaSeL_1.zip and BaSeL_2.zip into the following directory: 
+ 
+    SPECTRA/BaSeL3.1/
+
+Make sure all extracted files are placed directly inside the BaSeL3.1 folder.
 
 ## Compiling the Code
 The code includes a Makefile to facilitate compilation. Before proceeding, ensure that your system has a Fortran compiler installed (e.g., gfortran). You may need to modify the Makefile to specify the correct Fortran compiler for your system
