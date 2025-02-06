@@ -26,7 +26,7 @@ Before compiling, ensure that the SPS-VARIMF directory is located in the same pa
     
     • FILTERS
     
-    • YIELDS
+    • YIELD
 
 ## Compiling the Code
 The code includes a Makefile to facilitate compilation. Before proceeding, ensure that your system has a Fortran compiler installed (e.g., gfortran). You may need to modify the Makefile to specify the correct Fortran compiler for your system
