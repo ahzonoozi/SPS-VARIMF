@@ -18,7 +18,7 @@ An optional dust attenuation component is included in the model, implemented usi
    
 Before compiling, ensure that the SPS-VARIMF directory is located in the same parent directory as the following required folders:
 
-Please extract both BaSeL_1.zip and BaSeL_2.zip in SPECTRA/BaSeL3.1/ directory
+
     • OUTPUTS
     
     • SPECTRA
