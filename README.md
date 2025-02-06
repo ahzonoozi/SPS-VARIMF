@@ -32,12 +32,12 @@ Before compiling, ensure that the SPS-VARIMF directory is located in the same pa
 The code includes a Makefile to facilitate compilation. Before proceeding, ensure that your system has a Fortran compiler installed (e.g., gfortran). You may need to modify the Makefile to specify the correct Fortran compiler for your system
 
     1. Clean any previous builds:
-        ### make clean
+         make clean
     2. Compile the program:
-        ### make
+         make
         This will generate an executable file named main.exe in the SPS-VARIMF directory.
     3. Running the executable:
-         ### ./main.exe    
+          ./main.exe    
 
 
 
