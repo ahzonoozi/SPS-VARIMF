@@ -54,19 +54,19 @@ To properly configure the SPS-VARIMF model, key simulation parameters must first
 
 In order to adjust optional cases 
        
-   ### Dust attenuation (dust_atten):
+   #### Dust attenuation (dust_atten):
          
                        = 0 : Disabled   
                        = 1 : Enabled (power-law attenuation)
 
                        
-   ### Remnant mass calculation (remnant_cal):
+   #### Remnant mass calculation (remnant_cal):
    
                        = 0 :  Renzini et al. (1993) prescription      
                        = 1 :  Spera et al. (2015) prescription
 
                        
-   ### Metallicity evolution mode (Z_MODE):
+   #### Metallicity evolution mode (Z_MODE):
    
                        = 0 : Constant metallicity 
                        = 1 : Metallicity computed at each step from gas enrichment
