@@ -1,1 +1,5 @@
 *.f90 linguist-language=Fortran
+*.f90 linguist-detectable
+*.f95 linguist-detectable
+*.f linguist-detectable
+*.py linguist-vendors
