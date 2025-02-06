@@ -1,6 +1,6 @@
 # SPS-VARIMF
 The Stellar Population Synthesis for Varying Initial Mass Function (SPS-VARIMF) model is designed to compute the spectral and photometric evolution of stellar populations across a broad parameter space. This model is explicitly developed to investigate the impact of a non-universal Initial Mass Function (IMF) on key galactic properties, including integrated luminosities, stellar masses, and the fractional contributions of stellar remnants. 
-MD
+
 #IMF Variation in SPS-VARIMF
 
 In SPS-VARIMF, the galaxy-wide IMF (gwIMF) is allowed to vary at each time step based on the galaxy's star formation rate (SFR) and the gas-phase metallicity at that epoch. The code includes both an invariant IMF and the Integrated Galaxy-wide IMF (IGIMF) framework, but it can also accommodate any other variable IMF prescription through private communication. This flexibility makes SPS-VARIMF a powerful tool for exploring the consequences of IMF variability in different astrophysical contexts.
