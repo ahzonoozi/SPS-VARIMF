@@ -149,6 +149,18 @@ Specifies the initial metallicity index:
     • Valid range: 0 < f_star < 1 
 
 
+### OUTPUT Folder
+The OUTPUT/ directory stores the simulation results. It contains two main types of output files:
+
+1️.mags Files
+These files store essential evolutionary parameters of the simulated stellar population, including time, stellar mass, luminosity, star formation rate, mass of remnants, mass of white dwarfs, metallicity, the ratio of gas-phase mass to total galaxy mass, and magnitudes in 143 photometric bands as listed in FILTER_LIST.dat, all recorded at each evolutionary time step.
+These .mags files are crucial for analyzing the photometric evolution of the galaxy.
+
+2️.spec Files
+These files contain the wavelength array and the corresponding spectra (fν) in L☉/Hz units at each evolutionary time step.
+
+
+
  ## Acknowledgments
 This program is built upon extensive research in stellar population synthesis and uses publicly available codes and libraries, including Padova, PARSEC, BaSeL, GALAXEV (Bruzual & Charlot), FSPS (Flexible Stellar Population Synthesis), and others. We acknowledge the invaluable contributions of the researchers and developers who have made these resources available to the scientific community.
 SPS-VARIMF was developed by Akram Hasani Zonoozi at the Institute for Advanced Studies in Basic Sciences (IASBS).  For any publications or research that utilize SPS-VARIMF , please cite the following reference:
