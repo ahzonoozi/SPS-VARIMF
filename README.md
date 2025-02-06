@@ -49,29 +49,25 @@ In order to adjust optional cases
        
    ### Dust attenuation (dust_atten):
          
-                       = 0 : Disabled
-                       
+                       = 0 : Disabled   
                        = 1 : Enabled (power-law attenuation)
 
                        
    ### Remnant mass calculation (remnant_cal):
    
-                       = 0 :  Renzini et al. (1993) prescription
-                       
+                       = 0 :  Renzini et al. (1993) prescription      
                        = 1 :  Spera et al. (2015) prescription
 
                        
    ### Metallicity evolution mode (Z_MODE):
    
                        = 0 : Constant metallicity 
-                       
                        = 1 : Metallicity computed at each step from gas enrichment
 
                        
    ### OB stars count calculation (OB_stars):
    
-                       = 0 : Do not compute the number of OB stars
-                       
+                       = 0 : Do not compute the number of OB stars    
                        = 1 : Compute the number of OB stars
 
                        
@@ -85,9 +81,7 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
   Specifies the type of IMF used in the simulation:
   
     • 2 → Canonical IMF (Kroupa 2001) – A standard IMF with fixed power-law slopes.
-    
-    • 3 →  Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.
-    
+    • 3 →  Integrated Galactic IMF (IGIMF) – An SFR- and metallicity-dependent IMF.  
     • 5 →  Top-Heavy IMF – A flatter IMF favoring high-mass star formation.
 
  ### Isochrones (isoc_type)
@@ -95,7 +89,6 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
  Determines the stellar evolution tracks used:
  
     • 1 → Padova (2007)
-    
     • 2 → PARSEC (2022)
 
  ### Spectral Library (spec_type)
@@ -103,7 +96,6 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
  Specifies the spectral database used for stellar populations:
  
     • 1 → BaSeL spectral library (default)
-    
     • 2 → Miles spectral library (in progress, not yet available)
 
  ### Star Formation History (SFH) (sfh_type)
@@ -111,11 +103,8 @@ Modify the simulation parameters  in the main.f90 program to setup the model. Th
  Defines how the galaxy forms stars over time:
  
     • 0 → Single Stellar Population (SSP) – All stars form in a single burst.
-    
     • 1 → Constant Star Formation Rate (SFR) – Stars form at a steady rate over time.
-    
-    • 2 → Exponentially Declining SFR – Star formation rate decreases exponentially.
-    
+    • 2 → Exponentially Declining SFR – Star formation rate decreases exponentially. 
     • 4 → Delayed-Tau SFH – A rising SFR phase followed by exponential decline.
     
  ### Additional SFH Parameters:
@@ -141,9 +130,10 @@ Specifies the initial metallicity index:
  Defines the total stellar mass formed over time:
     • M_galaxy → Total stellar mass of a galaxy (in solar masses).
     • M_UCD → Monolithic formation of ultra-compact dwarf galaxies (UCDs), following a top-heavy IMF.
-Star Formation Efficiency (f_star):
-Determines how efficiently gas converts into stars:
- f_star=M_galaxy/M_gas​​
+
+ ### Star Formation Efficiency (f_star):
+ Determines how efficiently gas converts into stars:
+  f_star=M_galaxy/M_gas​​
     • Valid range: 0 < f_star < 1 
 
     
