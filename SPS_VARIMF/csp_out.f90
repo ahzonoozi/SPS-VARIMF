@@ -201,6 +201,8 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
 
   IF(Z_MODE .EQ. 1) THEN
      WRITE(20,'("#   f_star = Mgalaxy/Mgas =: ", E7.1)')f_star
+  ELSEIF(Z_MODE .EQ. 0)THEN
+     WRITE(20,'("#   Metallicity remains constant", A)')   
   ENDIF
 
 
