@@ -1,3 +1,6 @@
 *.f90 linguist-language=Fortran
 *.f95 linguist-language=Fortran
 *.f03 linguist-language=Fortran
+*.bin linguist-vendored
+*.dat linguist-vendored
+*.txt linguist-vendored
