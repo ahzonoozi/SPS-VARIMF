@@ -70,7 +70,7 @@ SUBROUTINE GAL_MAGS(spec,mags)
      mags(i) = mags(i) / sum_filtr
 
      ! Convert solar flux to magnitude
-     IF (magsun(i).LT.2*small_value) THEN
+     IF (magsun(i).LT.small_value) THEN
         magsun(i) = 99.0
      ELSE
         magsun(i) = -2.5*LOG10(magsun(i)) - 48.60
