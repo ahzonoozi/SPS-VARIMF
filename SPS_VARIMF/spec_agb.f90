@@ -6,7 +6,7 @@ SUBROUTINE SPEC_AGB()
   IMPLICIT NONE
 
   INTEGER :: stat=1,i,j
-  INTEGER, PARAMETER :: nspec_agb=3961
+  INTEGER, PARAMETER :: nspec_agb=6152
 
   REAL(KIND(1.d0)) :: aa,bb,z_null
   REAL(KIND(1.d0)), DIMENSION(n_agb_o):: color_o
