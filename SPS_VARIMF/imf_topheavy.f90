@@ -68,7 +68,7 @@ SUBROUTINE IMF_TOPHEAVY(mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
      IF (mini(i).GE.M_LOW.AND.mini(i).LT.M_turn1) THEN
         IMF=k1*mini(i)**(-alpha1)
      ENDIF                                       
-     IF (mini(i).GE.M_turn1.AND.mini(i).LE.M_UP) THEN
+     IF (mini(i).GE.M_turn1.AND.mini(i).LE.M_turn2) THEN
         IMF= k2*mini(i)**(-alpha2)    
      ENDIF
      IF (mini(i).GE.M_turn2.AND.mini(i).LE.M_UP) THEN
