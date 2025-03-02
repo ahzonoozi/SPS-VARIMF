@@ -10,9 +10,10 @@ SUBROUTINE IMF_TOPHEAVY(mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
   REAL(KIND(1.d0)), INTENT(out), DIMENSION(nm) :: N_IMF
   REAL(KIND(1.d0)), INTENT(out), DIMENSION(nm) :: Mret,Metal_eject,Nrem
   REAL(KIND(1.d0)), DIMENSION(2000)   :: mrem
-  INTEGER  :: i,j
+  INTEGER :: i,j
   REAL(KIND(1.d0)) :: m1,m2,IMF,dm
   REAL(KIND(1.d0)) :: k1,k2,k3
+  REAL(KIND(1.d0)) :: m_max1
   REAL(KIND(1.d0)) :: M_LOW,M_turn1,M_turn2,M_UP,alpha3,Mass_isoc,Mrem_isoc
   REAL(KIND(1.d0)) FeH, xx
 
@@ -30,6 +31,8 @@ SUBROUTINE IMF_TOPHEAVY(mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
    M_UP=150.
    FeH=LOG10(z_isoc(zmet)/0.02)
 
+   CALL max_mstar(FeH,M_UCD,m_max1)
+   M_UP = m_max1
 
    !Top_heavy IMF for SCs or UCDs that form monotically 
    xx = 0.99*(0.61*log10(M_UCD)+2.85-6.0)-0.14*FeH
