@@ -19,6 +19,7 @@ SUBROUTINE CSP_OUT(output_name)
   REAL(KIND(1.d0)), DIMENSION(5) :: n_Bstars
   REAL(KIND(1.d0)), DIMENSION(num_time, 5) :: N_O, N_B
   INTEGER, DIMENSION(num_time+1) ::zmet_time
+  REAL(KIND(1.d0)), DIMENSION(n_index) :: indices
 
   CHARACTER(34) :: fmt
   
@@ -54,7 +55,10 @@ SUBROUTINE CSP_OUT(output_name)
 
      zmet_time(i+1)= MAX(locate(z_isoc,Metal_csp),1)
 
-
+     !compute indices
+     IF(index_cal .EQ. 1) THEN
+        CALL compute_indx(lambda,spec_csp,indices)
+     ENDIF
      
      ! Update mass and calculate magnitudes 
      mass_csp  = mass_csp  + mrem_csp
@@ -84,6 +88,9 @@ SUBROUTINE CSP_OUT(output_name)
         LOG10(mass_csp + small_value), lbol_csp, LOG10(tsfr + small_value)
     WRITE(20,'(50000(E14.6))') MAX(spec_csp,small_value)
 
+    !write indices to file
+    WRITE(30,'(55(F8.4,4x))') LOG10(age) + 9.0, indices
+    
     ! Write OB star counts if enabled 
     IF(OB_stars==1)THEN
        WRITE(25,*) LOG10(age) + 9.0, n_Ostars, n_Bstars
@@ -238,6 +245,64 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
   IF (imax-imin.GT.1) WRITE(20,'(I3,1x,I6)') num_time,nspec
   WRITE(20,'(50000(F15.4))') lambda
 
+!-----------------------------------------
+
+
+  ! Open indices output file
+  OPEN(30,FILE='../OUTPUTS/'//TRIM(output_name)//'.indx',&
+     STATUS='REPLACE')
+     
+     
+     SELECT CASE (imf_type)
+  CASE (2)
+     WRITE(30, '("#   IMF: canonical IMF, slopes= ",3F4.1)') alpha1, alpha2
+  CASE (3)
+     WRITE(30, '("#   IMF: IGIMF ")')
+  CASE (5)
+     WRITE(30, '("#   IMF: Top heavy IMF")')
+  CASE DEFAULT
+     WRITE(30, '("#   IMF: ",I1)') imf_type
+  END SELECT
+  
+  
+  
+  WRITE(30,'("#   Mag Zero Point: AB ")')
+  IF(Z_MODE .EQ. 0) THEN
+     WRITE(30,'("#   Log(Z/Zsun): ",F6.3)') LOG10(z_isoc(zmet_ini)/zsun_isoc)
+  ELSE
+     WRITE(30,'("#   Log(Z_ini/Zsun): ",F6.3)') LOG10(z_isoc(zmet_ini)/zsun_isoc)
+  ENDIF
+
+  WRITE(30,'("#  Mgalaxy: ", E7.1)')M_galaxy
+
+  IF(Z_MODE .EQ. 1) THEN
+     WRITE(30,'("#   f_star = Mgalaxy/Mgas =: ", E7.1)')f_star
+  ELSEIF(Z_MODE .EQ. 0)THEN
+     WRITE(30,'("#   Metallicity remains constant over time", A)')   
+  ENDIF
+
+
+
+  ! Write star formation history type
+  SELECT CASE (sfh_type)
+  CASE (0)
+     WRITE(30, '("#   SFH: SSP")')
+  CASE (1)
+     WRITE(30, '("#   SFH: constant SFR")')
+     WRITE(30, 3) tau, Tstart, Ttrunc
+  CASE (2)
+     WRITE(30, '("#   SFH: exponentially declining")')
+     WRITE(30, 3) tau, Tstart, Ttrunc
+  CASE (4)
+     WRITE(30, '("#   SFH: delay-tau")')
+     WRITE(20, 3) tau, Tstart, Ttrunc
+  END SELECT
+
+
+
+  WRITE(30,'("#   log(age)  indices ")')
+ 
+     
 
 
 
