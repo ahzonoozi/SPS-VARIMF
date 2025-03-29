@@ -27,7 +27,7 @@ COMMON = params.o sub_func.o  csp_out.o csp_gen.o Read_input.o\
          locate.o ssp_gen.o gal_mags.o imf_norm.o IGIMF_NORM.o\
          max_mecl.o max_mstar.o getspec.o filtr.o spec_wr.o spec_pagb.o\
          linterparr.o linterp.o sfh_gal.o spec_agb.o spec_wmb.o\
-         imf_topheavy.o 
+         imf_topheavy.o compute_indx.o
 
 all : $(PROGS)
 
