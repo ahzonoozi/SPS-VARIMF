@@ -15,6 +15,8 @@ SUBROUTINE READ_INPUT(Zinput)
   !REAL(KIND(1.d0)), DIMENSION(2901) ::mass_yield
   !REAL(KIND(1.d0)), DIMENSION(4,2901) :: Metal_yield
   REAL(KIND(1.0)), DIMENSION(nspec,nzinit,ndim_logt,ndim_logg) :: flux_speclib=0.
+  REAL(KIND(1.d0)), DIMENSION(n_index,6) :: sigma2=0.
+  REAL(KIND(1.d0)), DIMENSION(n_index,6) :: airvac_factor=0.
 
   CHARACTER(6) :: zstype,zyname
   CHARACTER(1) :: header
@@ -146,7 +148,35 @@ SUBROUTINE READ_INPUT(Zinput)
      CLOSE(101)
   ENDDO
 
+  !----------------------------------------------------------------!
+  ! Read indices
+  !----------------------------------------------------------------!
+   OPEN(100,FILE='../INDICES/indices.dat'&
+          ,STATUS='OLD',iostat=stat,ACTION='READ')
+  IF (stat /= 0) THEN
+     PRINT *, "Error: Could not open indices file!"
+     STOP
+  ENDIF
+  
  
+   READ(100,*)
+   
+   
+  DO i=1,n_index
+     READ(100,*,IOSTAT=stat)index_info(i,:)   !(index_info(i,k),k=1,6)
+     
+     IF(index_info(i,8) .EQ. 1.) THEN
+        sigma2(i,1:6) = (10000./index_info(i,1:6))**2.0    
+        airvac_factor(i,1:6) = 1.D0 + 6.4328D-5 + 2.94981D-2/(146.d0 - sigma2(i,1:6))  + &
+                          2.5540D-4/( 41.d0 - sigma2(i,1:6)) 
+                          
+        index_info(i,1:6) = index_info(i,1:6)* airvac_factor(i,1:6) 
+     ENDIF
+                        
+  ENDDO
+  CLOSE(100)
+  
+  
   !----------------------------------------------------------------!
   ! Read Spectral Libraries
   !----------------------------------------------------------------!
