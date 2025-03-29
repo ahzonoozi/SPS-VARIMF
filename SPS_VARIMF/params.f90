@@ -44,7 +44,11 @@ MODULE PARAMS
   ! 0 = Do not compute OB stars
   ! 1 = Compute OB stars 
   INTEGER :: OB_stars=0
-
+  
+  !compute indices 
+  !0 = Do not compute indices
+  !1 = cmpute indices
+  INTEGER :: index_cal=1
 
 
   ! ============================
@@ -73,7 +77,7 @@ MODULE PARAMS
   INTEGER, PARAMETER :: nzinit=6
   INTEGER, PARAMETER :: nspec=1963
 
-
+  INTEGER, PARAMETER :: n_index= 54
   ! ======================================
   ! Dust Parameters
   ! ======================================
@@ -179,6 +183,8 @@ MODULE PARAMS
   REAL(KIND(1.d0)), DIMENSION(4) :: z_yield=-99.
   REAL(KIND(1.d0)), DIMENSION(2901) :: mass_yield
   REAL(KIND(1.d0)), DIMENSION(4,2901) :: Metal_yield
+  
+   REAL(KIND(1.d0)), DIMENSION(n_index,8) :: index_info=0.
 
   REAL(KIND(1.d0)), DIMENSION(num_time) :: time_full=0.
 
