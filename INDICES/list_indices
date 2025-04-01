@@ -1,55 +1,73 @@
-Lick_CN1
-Lick_CN2	
-Lick_Ca4227	
-Lick_G4300	 
-Lick_Fe4383
-Lick_Ca4455	
-Lick_Fe4531	
-Lick_C4668	
-Lick_Hb	       
-Lick_Fe5015	
-Lick_Mg1	 
-Lick_Mg2	
-Lick_Mgb	
-Lick_Fe5270	 
-Lick_Fe5335	 
-Lick_Fe5406	
-Lick_Fe5709	
-Lick_Fe5782	
-Lick_NaD	 
-Lick_TiO1	 
-Lick_TiO2	
-Lick_Hd_A	
-Lick_Hg_A	
-Lick_Hd_F	
-Lick_Hg_F	
-DTT_CaII8498	
-DTT_CaII8542	 
-DTT_CaII8662	
-DTT_MgI8807	
-BH_CNB	        
-BH_HK	        
-BH_CaI	        
-BH_G	        
-BH_Hb	         
-BH_MgG	        
-BH_MH	        
-BH_FC	        
-BH_NaD	        
-CaHK
-CaII2
-CaII3
-Pa17
-Pa12
-MgICvD
-NaICvD
-MgIIR
-FeHCvD
-NaI
-bTiO 
-aTiO
-CaH1
-CaH2
-NaISDSS    
-TiO2SDSS
+collected from:
+https://wwwmpa.mpa-garching.mpg.de/SDSS/DR4/SDSS_fixedidx.html
+https://sdss-mangadap.readthedocs.io/en/latest/spectralindices.html
+Index Name            ref
+Lick_CN1               1
+Lick_CN2	       1
+Lick_Ca4227	       1
+Lick_G4300	       1   
+Lick_Fe4383            1 
+Lick_Ca4455	       1
+Lick_Fe4531	       1 
+Lick_C4668	       1 
+Lick_Hb	               1
+Lick_Fe5015	       1
+Lick_Mg1	       1 
+Lick_Mg2	       1 
+Lick_Mgb	       1
+Lick_Fe5270	       1  
+Lick_Fe5335	       1 
+Lick_Fe5406	       1
+Lick_Fe5709	       1
+Lick_Fe5782	       1
+Lick_NaD	       1
+Lick_TiO1	       1
+Lick_TiO2	       1
+Lick_Hd_A	       1
+Lick_Hg_A	       1
+Lick_Hd_F	       1
+Lick_Hg_F	       1
+DTT_CaII8498	       2
+DTT_CaII8542	       2
+DTT_CaII8662	       2
+DTT_MgI8807	       2
+BH_CNB	               3 
+BH_HK	               3
+BH_CaI	               3
+BH_G	               3
+BH_Hb                  3	         
+BH_MgG	               3
+BH_MH	               3
+BH_FC	               3
+BH_NaD	               3
+CaHK                   4
+caII1                  5
+CaII2                  5
+CaII3                  5 
+Pa17                   5
+pa14                   5 
+Pa12                   5
+MgICvD                 6
+NaICvD                 6     
+MgIIR                  6
+FeHCvD                 6
+NaI                    7 
+bTiO                   8    
+aTiO                   8 
+CaH1                   8
+CaH2                   8 
+NaISDSS                9
+TiO2SDSS               9
+
+[1]  Lick indices from Worthey et al., 1994, ApJS, 94, 687  
+                       Worthey & Ottaviani, 1997, ApJS, 111, 377 
+                       Trager et al. (1998, ApJS, 116, 1)
+[2]  DTT indices from Diaz, Terlevich, & Terlevich, 1989, MNRAS, 239, 325
+[3]  BH indices from Brodie and Hanes (see Huchra et al. 1996, ApJS, 102, 29)
+[4]  Serven et al. (2005, ApJ, 627, 754)
+[5]  Cenarro et al. (2001, MNRAS, 326, 959)
+[6]  Conroy & van Dokkum (2012, ApJ, 747, 69)
+[7]  Spiniello et al. (2012, ApJL, 753, 32)
+[8]  Spiniello et al. (2014, MNRAS, 438, 1483)
+[9]  La Barbera et al. (2013, MNRAS, 433, 3017)
 
