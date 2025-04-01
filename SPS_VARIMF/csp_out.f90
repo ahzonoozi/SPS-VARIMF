@@ -89,7 +89,7 @@ SUBROUTINE CSP_OUT(output_name)
     WRITE(20,'(50000(E14.6))') MAX(spec_csp,small_value)
 
     !write indices to file
-    WRITE(30,'(55(F8.4,4x))') LOG10(age) + 9.0, indices
+    WRITE(30,'(57(F8.4,4x))') LOG10(age) + 9.0, indices
     
     ! Write OB star counts if enabled 
     IF(OB_stars==1)THEN
