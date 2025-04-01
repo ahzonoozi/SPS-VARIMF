@@ -77,7 +77,7 @@ MODULE PARAMS
   INTEGER, PARAMETER :: nzinit=6
   INTEGER, PARAMETER :: nspec=1963
 
-  INTEGER, PARAMETER :: n_index= 54
+  INTEGER, PARAMETER :: n_index= 56
   ! ======================================
   ! Dust Parameters
   ! ======================================
