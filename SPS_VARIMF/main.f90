@@ -32,13 +32,18 @@ PROGRAM MAIN
   !     =5 Top_heavy IMF for star clusters or UCDS that form monothically;
 
 
-  sfh_type  = 1
+  sfh_type  = 1 !1
   !SFH: sfh=0  simple stellar population,
   !     sfh=1  constant SFR  model;
   !     sfh=2  exponentially declining  model;
-  !     sfh=4 delay-tau model;
+  !     sfh=3  Eappen et al. 2022 
+  !     sfh=4  delay-tau model;
 
-
+  
+  ! tpek and dTm used for sfh_type=3
+  ! tpeak[Gyr] is the time of the peak of SFH; dTm[Gyr] is the star formation timescale  
+  tpeak = 4.4 
+  dTm = .54
 
   !e_folding time_scale. used in sfh_type=2 and 4
   !the range is between 0.001 -1000.0
@@ -114,6 +119,9 @@ PROGRAM MAIN
      ELSEIF(sfh_type==2)THEN
        ALLOCATE(CHARACTER(len=11) :: SFR_name)
         SFR_name = 'exp_decline'
+     ELSEIF(sfh_type==3)THEN
+       ALLOCATE(CHARACTER(len=10) :: SFR_name)
+        SFR_name = 'Eappen_SFH'   
      ELSEIF(sfh_type==4)THEN
         ALLOCATE(CHARACTER(len=9) :: SFR_name)
         SFR_name = 'delay_tau'
