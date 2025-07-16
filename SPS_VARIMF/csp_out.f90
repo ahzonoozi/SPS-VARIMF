@@ -170,6 +170,9 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
   CASE (2)
      WRITE(10, '("#   SFH: exponentially declining")')
      WRITE(10, 3) tau, Tstart, Ttrunc
+  CASE (3)
+     WRITE(10, '("#   SFH: Eappen et al. 2022")')
+     WRITE(10, 3) tpeak, dTm, Tstart, Ttrunc
   CASE (4)
      WRITE(10, '("#   SFH: delay-tau")')
      WRITE(10, 3) tau, Tstart, Ttrunc
@@ -231,6 +234,9 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
   CASE (2)
      WRITE(20, '("#   SFH: exponentially declining")')
      WRITE(20, 3) tau, Tstart, Ttrunc
+  CASE (3)
+     WRITE(20, '("#   SFH: Eappen et al. 2022")')
+     WRITE(20, 3) tpeak, dTm, Tstart, Ttrunc   
   CASE (4)
      WRITE(20, '("#   SFH: delay-tau")')
      WRITE(20, 3) tau, Tstart, Ttrunc
