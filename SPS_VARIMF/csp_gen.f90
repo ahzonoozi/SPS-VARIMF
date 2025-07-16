@@ -56,7 +56,7 @@ SUBROUTINE csp_gen(j, zmet_time,tage, mass_csp, mrem_csp, mdwarf_csp, lbol_csp,&
 
   ! Determine start time based on star formation history
   t_start =0.0
-  IF ((sfh_type .EQ. 2) .OR. (sfh_type .EQ. 4) .OR. (sfh_type .EQ. 1)) THEN
+  IF ((sfh_type .EQ. 2) .OR.(sfh_type .EQ. 3) .OR. (sfh_type .EQ. 4) .OR. (sfh_type .EQ. 1)) THEN
      t_start = Tstart * 1e9
   ENDIF
 
