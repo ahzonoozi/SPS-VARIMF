@@ -59,6 +59,8 @@ MODULE PARAMS
   REAL(KIND(1.d0)) :: M_UCD        ! Ultra-Compact Dwarf (UCD) mass 
   REAL(KIND(1.d0)) :: f_star       ! Star formation efficiency: M_star / M_gas 
   REAL(KIND(1.d0)) :: zsun_isoc    ! Solar metallicity in isochrones
+  REAL(KIND(1.d0)) :: tpeak        ! tpeak[Gyr] the time of the peak of SFH, Eappen et al. 2022 
+  REAL(KIND(1.d0)) :: dTm          ! dTm[Gyr]  the star formation timescale, Eappen et al. 2022  
   REAL(KIND(1.d0)) :: tau          ! E-folding timescale for SFH (in Gyr)
   REAL(KIND(1.d0)) :: Tstart       ! Starting time of star formation (in Gyr)
   REAL(KIND(1.d0)) :: Ttrunc       ! Truncation time for star formation (in Gyr)
