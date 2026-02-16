@@ -161,8 +161,7 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
   IF(OB_stars==1)THEN  
      OPEN(25,FILE='../OUTPUTS/N_OBstars.txt',STATUS='REPLACE')
   ENDIF
-  OPEN(50,FILE='../OUTPUTS/ELEMENTS.txt',STATUS='REPLACE')
-  
+   
   !------------------------------------------------------!
 
 3 FORMAT('#   tau/Gyr= ',F8.3,', Tstart= 'F6.3,',Ttrunc= 'F6.3)
@@ -354,8 +353,15 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
 
   WRITE(30,'("#   log(age)  indices ")')
  
-     
+ 
+ !-----------------------------------------
 
+ 
+ !! Open ELEMENTS output file
+  OPEN(50,FILE='../OUTPUTS/ELEMENTS.txt',STATUS='REPLACE')
+    
+  WRITE(50,'("#   log(age) Z_gas Ca_g  C_g  Fe_g  He_g  H_g   Mg_g  Ne_g &
+              N_g  O_g  S_g  Si_g  Z_star Ca_s  C_s  Fe_s  He_s  H_s   Mg_s  Ne_s  N_s  O_s  S_s  Si_s")')
 
 
 END SUBROUTINE SETUP_OUTPUT
