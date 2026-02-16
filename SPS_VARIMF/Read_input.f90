@@ -42,6 +42,8 @@ SUBROUTINE READ_INPUT(Zinput)
      OPEN(100, FILE='../ISOCHRONES/Padova2007/zlegend.dat', STATUS='OLD', IOSTAT=stat)
   ELSE IF (isoc_type == 2) THEN
      OPEN(100, FILE='../ISOCHRONES/PARSEC2022/zlegend.dat', STATUS='OLD', IOSTAT=stat)
+  ELSE IF (isoc_type == 3) THEN
+     OPEN(100, FILE='../ISOCHRONES/PARSEC_high_resolution/zlegend.dat', STATUS='OLD', IOSTAT=stat)
   ELSE
      PRINT *, "Error: Unsupported isochrone type!"
      STOP
@@ -79,6 +81,14 @@ SUBROUTINE READ_INPUT(Zinput)
         OPEN(101,FILE='../ISOCHRONES/PARSEC2022/isoc_z'//&
              zstype//'.dat',STATUS='OLD', IOSTAT=stat,ACTION='READ')
      END IF
+     
+     !open Parsec isochrones with high resolution
+     iF (isoc_type == 3)Then
+        OPEN(101,FILE='../ISOCHRONES/PARSEC_high_resolution/isoc_z'//&
+             zstype//'.dat',STATUS='OLD', IOSTAT=stat,ACTION='READ')
+     END IF
+     
+     
      ! Check file status
      IF (stat /= 0) THEN
         PRINT *, "Error: Could not open isochrone file for Z=", zstype
@@ -134,19 +144,43 @@ SUBROUTINE READ_INPUT(Zinput)
   DO i = 1,num_yields 
      WRITE(zyname,'(F6.4)') z_yield(i)
 
-     OPEN(101,FILE='../YIELD/portinari98_Z'//&
-          zyname//'.txt',STATUS='OLD', IOSTAT=stat,ACTION='READ')
-     IF (stat /= 0) THEN
-        PRINT *, "Error: Could not open yield file for Z=", zyname
-        STOP
-     ENDIF 
+     IF(YIELD_TYPE .EQ. 1)THEN
+        OPEN(101,FILE='../YIELD/portinari98_Z'//&
+             zyname//'.txt',STATUS='OLD', IOSTAT=stat,ACTION='READ')
+        IF (stat /= 0) THEN
+           PRINT *, "Error: Could not open yield file for Z=", zyname
+           STOP
+        ENDIF 
+     ELSEIF(YIELD_TYPE .EQ. 2)THEN   
+        OPEN(101,FILE='../YIELD/marigo01_Z'//&
+             zyname//'.txt',STATUS='OLD', IOSTAT=stat,ACTION='READ')
+        IF (stat /= 0) THEN
+           PRINT *, "Error: Could not open yield file for Z=", zyname
+           STOP
+        ENDIF
+     ELSEIF(YIELD_TYPE .EQ. 3)THEN
+        OPEN(101,FILE='../YIELD/marigo_portinari98_Z'//&
+             zyname//'.txt',STATUS='OLD', IOSTAT=stat,ACTION='READ')
+        IF (stat /= 0) THEN
+           PRINT *, "Error: Could not open yield file for Z=", zyname
+           STOP
+        ENDIF     
+     ENDIF   
      
      READ(101,*) header
-     DO j =1, 2901
-        READ(101,*,IOSTAT=stat) mass_yield(j),Metal_yield(i,j)
+     DO j =1, 2900
+        READ(101,*,IOSTAT=stat) mass_yield(j),Metal_yield(i,j),Ca_yield(i,j),C_yield(i,j),Fe_yield(i,j),&
+             He_yield(i,j),H_yield(i,j),Mg_yield(i,j),Ne_yield(i,j),N_yield(i,j),O_yield(i,j),S_yield(i,j),&
+             Si_yield(i,j)
      ENDDO
      CLOSE(101)
   ENDDO
+  
+   DO j = 2, 2900
+   IF (mass_yield(j) < mass_yield(j-1)) THEN
+      PRINT *, 'mass_yield not sorted at index', j
+   END IF
+  END DO
 
   !----------------------------------------------------------------!
   ! Read indices
