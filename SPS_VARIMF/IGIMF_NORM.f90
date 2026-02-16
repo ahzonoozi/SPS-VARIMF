@@ -1,4 +1,4 @@
-SUBROUTINE IGIMF_NORM(t1,t2,mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
+SUBROUTINE IGIMF_NORM(t1,t2,mini,nmass,N_IMF,Mret,Metal_eject,element_ej,Nrem,mrem1)
 
 
   USE PARAMS; USE sub_func
@@ -9,8 +9,9 @@ SUBROUTINE IGIMF_NORM(t1,t2,mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
   REAL(KIND(1.d0)), INTENT(in), DIMENSION(nm)  :: mini
   INTEGER, INTENT(in) :: nmass
   REAL(KIND(1.d0)), INTENT(out), DIMENSION(nm) :: N_IMF
-  REAL(KIND(1.d0)), INTENT(out), DIMENSION(nm) :: Mret,Metal_eject,Nrem
-
+  REAL(KIND(1.d0)), INTENT(out), DIMENSION(nm) :: mrem1,Mret,Metal_eject,Nrem
+  REAL(KIND(1.d0)), INTENT(out), DIMENSION(nm,11) :: element_ej
+  REAL(KIND(1.d0)), DIMENSION(nm) :: mass_ej, mass_el
   REAL(KIND(1.d0)), DIMENSION(num_rem) :: mrem
   REAL(KIND(1.d0)), DIMENSION(1000) :: Mecl,dMecl,Meclave,m_max,xx
 
@@ -27,7 +28,7 @@ SUBROUTINE IGIMF_NORM(t1,t2,mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
   REAL(KIND(1.d0)) :: B1,KK1,KK2,delta1,delta2,MCO,MM1,qq1
   REAL(KIND(1.d0)) :: P_MCO,F_MCO,A1,A2,L1,eta,h_MCO
 
-
+  REAL(KIND(1.d0)) :: Mtest,Mremtest
   !----------------------------------------------------
   !----------------------------------------------------
 
@@ -208,7 +209,8 @@ SUBROUTINE IGIMF_NORM(t1,t2,mini,nmass,N_IMF,Mret,Metal_eject,Nrem)
      Mret(j)=0.0
      mrem(j)=0.0
      Nrem(j)=0.0
-     Metal_eject(j) =0.0
+     Metal_eject(j) = 0.0
+     element_ej(j,:) = 0.0
 
   ENDDO
 
@@ -231,8 +233,19 @@ IF (mini(nmass).LT.M_UP) THEN
 
    DO j=1,num_rem
       mrem(j)=mini(nmass)+j*(M_Up-mini(nmass))/num_rem
-
+      mrem1(j)=mrem(j)
       Metal_eject(j) = Metal_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,1)  = Ca_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,2)  = C_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,3)  = Fe_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,4)  = He_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,5)  = H_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,6)  = Mg_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,7)  = Ne_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,8)  = N_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,9)  = O_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,10) = S_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
+      element_ej(j,11) = Si_yield(max(locate(z_yield,z_isoc(zmet)),1),locate(mass_yield,mrem(j)))
 
 !-------------------------------
       IF(remnant_cal.EQ.1)THEN
@@ -340,6 +353,29 @@ IF (mini(nmass).LT.M_UP) THEN
          ENDIF
 
       ENDIF
+      
+!------Renormalize elements to the ejected mass= mrem-Mret by
+! multiplying them to this value and dividing them to  sum(element)=X+Y+Z-------------------------
+
+      mass_ej(j)= mrem(j)-Mret(j)
+      mass_el(j)= Metal_eject(j)+ element_ej(j,4)+ element_ej(j,5) 
+
+
+      Metal_eject(j) = Metal_eject(j)* mass_ej(j)/mass_el(j)
+      element_ej(j,1)  = element_ej(j,1) * mass_ej(j)/mass_el(j)
+      element_ej(j,2)  = element_ej(j,2) * mass_ej(j)/mass_el(j)
+      element_ej(j,3)  = element_ej(j,3) * mass_ej(j)/mass_el(j)
+      element_ej(j,4)  = element_ej(j,4) * mass_ej(j)/mass_el(j)
+      element_ej(j,5)  = element_ej(j,5) * mass_ej(j)/mass_el(j)
+      element_ej(j,6)  = element_ej(j,6) * mass_ej(j)/mass_el(j)
+      element_ej(j,7)  = element_ej(j,7) * mass_ej(j)/mass_el(j)
+      element_ej(j,8)  = element_ej(j,8) * mass_ej(j)/mass_el(j)
+      element_ej(j,9)  = element_ej(j,9) * mass_ej(j)/mass_el(j)
+      element_ej(j,10) = element_ej(j,10) * mass_ej(j)/mass_el(j)
+      element_ej(j,11) = element_ej(j,11) * mass_ej(j)/mass_el(j)
+
+
+      
    ENDDO
 !-------------------------
    DO j=1,num_rem
@@ -409,14 +445,14 @@ IF (mini(nmass).LT.M_UP) THEN
         Nrem(j) = IGIMF*dm
 
 
-        !IF(SFR.LT.small_value)THEN
-        !   Nrem(j)=0.
-        !ENDIF
+        IF(SFR.LT.small_value)THEN
+           Nrem(j)=0.
+        ENDIF
 
 
-        !IF(Mecl_max.LT.5)THEN
-        !   Nrem(j)=0.
-        !ENDIF
+        IF(Mecl_max.LT.5)THEN
+           Nrem(j)=0.
+        ENDIF
 
 
         Mrem_isoc = Nrem(j)*mrem(j)+Mrem_isoc
@@ -425,6 +461,7 @@ IF (mini(nmass).LT.M_UP) THEN
 ENDIF
 
 
+Mtest=0.0
 !number of stars are normalized to the isochrone mass
 DO i=1,nmass
        
@@ -432,20 +469,20 @@ DO i=1,nmass
     IF(SFR.LT.small_value)THEN
        N_IMF(i)=0.
     ENDIF
-
+Mtest = N_IMF(i)*mini(i)+Mtest
 ENDDO
 
 
-
+Mremtest=0.0
 DO j=1,num_rem
    Nrem(j) = Nrem(j)/(Mrem_isoc+Mass_isoc)
    IF(SFR.LT.small_value)THEN
         Nrem(j)=0.
    ENDIF
-
+Mremtest = Nrem(j)*mrem(j)+Mremtest
 ENDDO
 
-
+!WRITE(*,*)Mrem_isoc+Mass_isoc,Mremtest+Mtest  
 
   RETURN
 END
