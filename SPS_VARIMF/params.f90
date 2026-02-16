@@ -48,7 +48,19 @@ MODULE PARAMS
   !compute indices 
   !0 = Do not compute indices
   !1 = cmpute indices
-  INTEGER :: index_cal=1
+  INTEGER :: index_cal=0
+  
+  !1= portinari98
+  !2= marigo01
+  !3= marigo01 for masses lower than 8.5 and portinari98 for M>8.5 M_sun
+  INTEGER :: YIELD_TYPE = 1
+  
+  !=1  Reference: Seitenzahl et al. 2013, MNRAS, 429, 1156
+  !=2  Reference: Iwamoto1999   https://ui.adsabs.harvard.edu/abs/1999ApJS..125..439I/abstract
+  !=3  Reference: Iwamoto1999_W70    https://ui.adsabs.harvard.edu/abs/1999ApJS..125..439I/abstract
+  !=4  Reference: Iwamoto1999_W7    https://ui.adsabs.harvard.edu/abs/1999ApJS..125..439I/abstract
+  !=5  Reference: Iwamoto1999_WDD3    https://ui.adsabs.harvard.edu/abs/1999ApJS..125..439I/abstract  
+  INTEGER :: yield_reference_SNIa = 1
 
 
   ! ============================
@@ -57,10 +69,10 @@ MODULE PARAMS
 
   REAL(KIND(1.d0)) :: M_galaxy     ! Total stellar mass of the galaxy
   REAL(KIND(1.d0)) :: M_UCD        ! Ultra-Compact Dwarf (UCD) mass 
-  REAL(KIND(1.d0)) :: f_star       ! Star formation efficiency: M_star / M_gas 
+  REAL(KIND(1.d0)) :: f_star       ! Star formation efficiency: M_star/M_gas 
   REAL(KIND(1.d0)) :: zsun_isoc    ! Solar metallicity in isochrones
   REAL(KIND(1.d0)) :: tpeak        ! tpeak[Gyr] the time of the peak of SFH, Eappen et al. 2022 
-  REAL(KIND(1.d0)) :: dTm          ! dTm[Gyr]  the star formation timescale, Eappen et al. 2022  
+  REAL(KIND(1.d0)) :: dTm          ! dTm[Gyr] the star formation timescale, Eappen et al. 2022  
   REAL(KIND(1.d0)) :: tau          ! E-folding timescale for SFH (in Gyr)
   REAL(KIND(1.d0)) :: Tstart       ! Starting time of star formation (in Gyr)
   REAL(KIND(1.d0)) :: Ttrunc       ! Truncation time for star formation (in Gyr)
@@ -68,9 +80,16 @@ MODULE PARAMS
 
 !set parameters based on the addopted  isochrone
 
+  !isoc_type = 1 or 2
   INTEGER, PARAMETER :: num_time=94      ! Number of time steps in isochrones
   INTEGER, PARAMETER :: nz=22            ! Number of metallicity bins
   INTEGER, PARAMETER :: num_isoc=94      ! Number of isochrones per metallicity
+  
+  !isoc_type = 3
+  !INTEGER, PARAMETER :: num_time=203      ! Number of time steps in isochrones
+  !INTEGER, PARAMETER :: nz=22             ! Number of metallicity bins
+  !INTEGER, PARAMETER :: num_isoc=203      ! Number of isochrones per metallicity
+
 
 !set parameters based on the addopted  spectral library
 
@@ -181,12 +200,25 @@ MODULE PARAMS
   INTEGER, DIMENSION(nz,num_time) :: nmass_isoc=0
   REAL(KIND(1.d0)), DIMENSION(nz,num_time) :: timestep_isoc=0.
   REAL(KIND(1.d0)), DIMENSION(nz) :: z_isoc=-99.
-
-  REAL(KIND(1.d0)), DIMENSION(4) :: z_yield=-99.
-  REAL(KIND(1.d0)), DIMENSION(2901) :: mass_yield
-  REAL(KIND(1.d0)), DIMENSION(4,2901) :: Metal_yield
   
-   REAL(KIND(1.d0)), DIMENSION(n_index,8) :: index_info=0.
+  
+  REAL(KIND(1.d0)), DIMENSION(4) :: z_yield=-99.
+  REAL(KIND(1.d0)), DIMENSION(2900) :: mass_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: Metal_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: Ca_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: C_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: Fe_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: He_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: H_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: Mg_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: Ne_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: N_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: O_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: S_yield
+  REAL(KIND(1.d0)), DIMENSION(4,2900) :: Si_yield
+  
+  
+  REAL(KIND(1.d0)), DIMENSION(n_index,8) :: index_info=0.
 
   REAL(KIND(1.d0)), DIMENSION(num_time) :: time_full=0.
 
