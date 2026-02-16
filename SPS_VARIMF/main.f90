@@ -20,6 +20,7 @@ PROGRAM MAIN
   isoc_type = 2
   !Isochrone:   1= padova2007 isochrone;
   !             2=parsec2022 isochrone
+  !             3= parsec2022-high resolution isochrone  
 
   spec_type =1
   !Spectra:     1= BaSel;
@@ -52,19 +53,19 @@ PROGRAM MAIN
 
   !The start and truncation time of star formation
   Tstart = 0.0
-  Ttrunc = 0.0
+  Ttrunc = 1.0
 
 
   !zmet_ini is the initial metallicity of galaxy
   !remain constant during the gallactic evolution
   !or change with time
-  zmet_ini = 11  !22
+  zmet_ini = 1  !22
 
   !The mass of all stars ever formed
-  M_galaxy = 1.*10.**(11.)
+  M_galaxy = 1.*10.**(12.)
   M_UCD = 1.*10.**(8.)
   !star transformation fraction, f_star=M_galaxy/M_gas
-  f_star = 0.3
+  f_star = 1.0
 
 
 
