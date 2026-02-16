@@ -1,4 +1,4 @@
-SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ssp,N_O,N_B)
+SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ssp,element_ssp,N_O,N_B,P_norm)
 
 ! calculate the evolution of a single stellar population
 
@@ -7,12 +7,16 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
   
   IMPLICIT NONE
   
-  INTEGER :: i, j, k, l
+  INTEGER :: i, j, k, l, s
   REAL(KIND(1.d0)), DIMENSION(nm) :: N_IMF
-  REAL(KIND(1.d0)), DIMENSION(num_rem) :: Mret,Metal_eject,Nrem
+  REAL(KIND(1.d0)), DIMENSION(num_rem) :: mrem1,Mret,Metal_eject,Nrem
+  REAL(KIND(1.d0)), DIMENSION(num_rem,11) :: element_ej
   REAL(KIND(1.d0)), INTENT(inout), DIMENSION(nspec,num_time) :: spec_ssp
   REAL(KIND(1.d0)), DIMENSION(nspec,num_time) :: tspec_ssp
   REAL(KIND(1.d0)), INTENT(inout), DIMENSION(num_time) :: mass_ssp, lbol_ssp, mrem_ssp, mdwarf_ssp,Metal_ssp
+  REAL(KIND(1.d0)), INTENT(inout), DIMENSION(num_time,11) :: element_ssp
+  REAL(KIND(1.d0)), DIMENSION(num_time) :: P_norm
+  REAL(KIND(1.d0)), DIMENSION(num_time)  :: Ntot_ssp, NSNe_pro
   REAL(KIND(1.d0)), DIMENSION(num_time,nm) :: mini,mact,logl,logt,logg,ffco,phase,lmdot
   INTEGER, DIMENSION(num_time) :: nmass
   REAL(KIND(1.d0)), DIMENSION(num_time) :: time
@@ -34,9 +38,12 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
   Metal_ssp = 0.
   mdwarf_ssp = 0.
   lbol_ssp = 0.
+  element_ssp = 0.0
 
   N_O = 0.0
   N_B = 0.0
+  Ntot_ssp = 0.0
+  NSNe_pro = 0.0
 
   !Check metallicity range
   IF (zmet.LT.1.OR.zmet.GT.nz) THEN
@@ -68,6 +75,10 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
      mass_ssp(i) = 0.0
      mrem_ssp(i) = 0.0
      Metal_ssp(i) = 0.0
+     Ntot_ssp(i) = 0.0
+     element_ssp(i,:) = 0.0
+     
+     P_norm(i) = 0.0
       
      ! Compute time intervals 
      IF(i.EQ.1)THEN
@@ -83,11 +94,11 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
      IF(t1.LT. small_value) t1 = 0.0
 
      IF(imf_type.EQ.2)THEN
-        CALL IMF_NORM(mini(i,:),mact(i,:),nmass(i),N_IMF(:),Mret(:),Metal_eject,Nrem(:))
+        CALL IMF_NORM(mini(i,:),mact(i,:),nmass(i),N_IMF(:),Mret(:),Metal_eject(:),element_ej(:,:),Nrem(:),mrem1(:))
      ELSEIF(imf_type.EQ.5)THEN
-        CALL IMF_TOPHEAVY(mini(i,:),nmass(i),N_IMF(:),Mret(:),Metal_eject(:),Nrem(:))
+        CALL IMF_TOPHEAVY(mini(i,:),nmass(i),N_IMF(:),Mret(:),Metal_eject(:),element_ej(:,:),Nrem(:),mrem1(:))
      ELSEIF(imf_type.EQ.3)THEN
-        CALL IGIMF_NORM(t1,t2,mini(i,:),nmass(i),N_IMF(:),Mret(:),Metal_eject(:),Nrem(:))
+        CALL IGIMF_NORM(t1,t2,mini(i,:),nmass(i),N_IMF(:),Mret(:),Metal_eject(:),element_ej(:,:),Nrem(:),mrem1(:))
      ENDIF
 
         
@@ -95,10 +106,34 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
         mass_ssp(i) = SUM(N_IMF(1:nmass(i))*mact(i,1:nmass(i)))
         mrem_ssp(i) = SUM(Nrem(1:num_rem)*Mret(1:num_rem))
         Metal_ssp(i) = SUM(Nrem(1:num_rem)*Metal_eject(1:num_rem))
-
+        DO s =1,11
+           element_ssp(i,s) = SUM(Nrem(1:num_rem)*element_ej(1:num_rem,s)) 
+        ENDDO
 
 !-----------------------------
+ ! Calculate the total number of stars and number of stars between 3 and 8 M_sun
+ 
+ 
+    Do j=1,nmass(i)  
+       Ntot_ssp(i) = N_IMF(j) + Ntot_ssp(i)
+       IF (mini(i,j).GE.1.5.AND.mini(i,j).LE.8.0) THEN    
+         NSNe_pro(i) = N_IMF(j) + NSNe_pro(i)
+      ENDIF
+    ENDDO
+    
+    
+    Do j=1,num_rem  
+       Ntot_ssp(i) = Nrem(j) + Ntot_ssp(i)
+       IF (mrem1(j).GE.1.5.AND.mrem1(j).LE.8.0) THEN    
+         NSNe_pro(i) = Nrem(j) + NSNe_pro(i)
+      ENDIF
+    ENDDO
+         
+      
+    P_norm(i) =  (NSNe_pro(i)**2./Ntot_ssp(i))/(0.08**2./1.9169)
+ !-----------------------------
  ! Calculate the number of OB stars with different masses
+ 
 
      IF(OB_stars==1)THEN
 
