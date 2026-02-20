@@ -325,7 +325,6 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
  ENDDO
  
  Metal_star_csp = ( Metal_star ) /Norm_star
- WRITE(*,*)'mmmmm',Metal_star_csp,Metal_star,Metal_gas_csp !,Norm_star
   
 
      DO s=1,11
