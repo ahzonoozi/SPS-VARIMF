@@ -77,7 +77,31 @@ In order to adjust optional cases
                        = 0 : Do not compute the number of OB stars    
                        = 1 : Compute the number of OB stars
 
-                       
+
+
+   #### Compute indices (index_cal):
+
+                      =0 : Do not compute indices
+                      =1 : compute indices
+
+
+
+  #### Stellar yields (YIELD_TYPE):   
+
+                      = 1 : Portinari et al. (1998)
+                      = 2 : Marigo (2001)
+                      = 3 : Marigo (2001) for M < 8.5 Msun
+                             & Portinari et al. (1998) for M > 8.5 Msun
+                      
+  #### Type Ia SN yields (yield_reference_SNIa):
+
+                     = 1 : Seitenzahl et al. (2013)
+                     = 2 : Iwamoto et al. (1999)
+                     = 3 : Iwamoto et al. (1999) W70 model
+                     = 4 : Iwamoto et al. (1999) W7 model
+                     = 5 : Iwamoto et al. (1999) WDD3 model
+
+                                
                        
 ## Model Configuration Parameters
 
@@ -160,6 +184,15 @@ These .mags files are crucial for analyzing the photometric evolution of the gal
 2️.spec Files:
 
 These files contain the wavelength array and the corresponding spectra (fν) in L☉/Hz units at each evolutionary time step.
+
+
+3. ELEMENTS.txt file
+   
+   This file contains the chemical evolution history of the galaxy as a function of log(age). The output includes the metallicity of the gas and stellar components (Z_gas and Z_star), together with the masses of the most abundant chemical elements (H, He, C, N, O, Ne, Mg, Si, S, Ca, and Fe) separately tracked in the gas and stellar phases.
+All quantities are normalized such that the total stellar mass formed over the galaxy lifetime is equal to 1 M☉.
+
+
+The output columns are listed in the header of each file.
 
 
 
