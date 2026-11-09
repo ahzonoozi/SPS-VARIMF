@@ -1,4 +1,5 @@
-SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ssp,element_ssp,N_O,N_B,P_norm)
+SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ssp,&
+                   element_ssp,N_O,N_B,P_norm,NNS,NBH,mNS_ssp,mBH_ssp)
 
 ! calculate the evolution of a single stellar population
 
@@ -15,7 +16,7 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
   REAL(KIND(1.d0)), DIMENSION(nspec,num_time) :: tspec_ssp
   REAL(KIND(1.d0)), INTENT(inout), DIMENSION(num_time) :: mass_ssp, lbol_ssp, mrem_ssp, mdwarf_ssp,Metal_ssp
   REAL(KIND(1.d0)), INTENT(inout), DIMENSION(num_time,11) :: element_ssp
-  REAL(KIND(1.d0)), DIMENSION(num_time) :: P_norm
+  REAL(KIND(1.d0)), DIMENSION(num_time) :: P_norm,NNS,NBH,mNS_ssp,mBH_ssp
   REAL(KIND(1.d0)), DIMENSION(num_time)  :: Ntot_ssp, NSNe_pro
   REAL(KIND(1.d0)), DIMENSION(num_time,nm) :: mini,mact,logl,logt,logg,ffco,phase,lmdot
   INTEGER, DIMENSION(num_time) :: nmass
@@ -44,6 +45,11 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
   N_B = 0.0
   Ntot_ssp = 0.0
   NSNe_pro = 0.0
+
+  NNS = 0.0 
+  NBH = 0.0 
+  mNS_ssp = 0.0 
+  mBH_ssp = 0.0
 
   !Check metallicity range
   IF (zmet.LT.1.OR.zmet.GT.nz) THEN
@@ -79,6 +85,11 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
      element_ssp(i,:) = 0.0
      
      P_norm(i) = 0.0
+
+     NNS(i) = 0.0 
+     NBH(i) = 0.0 
+     mNS_ssp(i) = 0.0 
+     mBH_ssp(i) = 0.0
       
      ! Compute time intervals 
      IF(i.EQ.1)THEN
@@ -110,9 +121,12 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
            element_ssp(i,s) = SUM(Nrem(1:num_rem)*element_ej(1:num_rem,s)) 
         ENDDO
 
+
+
 !-----------------------------
- ! Calculate the total number of stars and number of stars between 3 and 8 M_sun
- 
+ ! Calculate the total number of stars and number of stars with initial masses between 3 and 8 M_sun
+ ! Type Ia Supernova progenitors:  3 M_{sun} <Mini <8 M_{sun}
+ !mrem is the initial masses of stars that are already converted to remnants 
  
     Do j=1,nmass(i)  
        Ntot_ssp(i) = N_IMF(j) + Ntot_ssp(i)
@@ -126,11 +140,30 @@ SUBROUTINE SSP_GEN(l,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ss
        Ntot_ssp(i) = Nrem(j) + Ntot_ssp(i)
        IF (mrem1(j).GE.1.5.AND.mrem1(j).LE.8.0) THEN    
          NSNe_pro(i) = Nrem(j) + NSNe_pro(i)
-      ENDIF
+       ENDIF
     ENDDO
          
       
     P_norm(i) =  (NSNe_pro(i)**2./Ntot_ssp(i))/(0.08**2./1.9169)
+
+!-----------------------------
+ ! Calculate the total number of BHs and NSs and their masses
+ ! BHs= 25<mini<100  and NSs= 8<mini<25
+
+    Do j=1,num_rem  
+       IF (mrem1(j).GE.8.0.AND.mrem1(j).LE.25.) THEN    
+         NNS(i) = Nrem(j) + NNS(i)
+         mNS_ssp(i) = Nrem(j)*Mret(j)+mNS_ssp(i)
+       ENDIF
+
+       IF (mrem1(j).GE.25.0.AND.mrem1(j).LE.150.0) THEN    
+         NBH(i) = Nrem(j) + NBH(i)
+         mBH_ssp(i) = Nrem(j)*Mret(j)+mBH_ssp(i)
+       ENDIF  
+    ENDDO
+
+
+
  !-----------------------------
  ! Calculate the number of OB stars with different masses
  
