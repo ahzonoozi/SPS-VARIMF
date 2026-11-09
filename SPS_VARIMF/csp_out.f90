@@ -21,6 +21,7 @@ SUBROUTINE CSP_OUT(output_name)
   REAL(KIND(1.d0)), DIMENSION(5) :: n_Ostars
   REAL(KIND(1.d0)), DIMENSION(5) :: n_Bstars
   REAL(KIND(1.d0)), DIMENSION(num_time,5) :: N_O, N_B
+  REAL(KIND(1.d0)) :: NNS_csp,NBH_csp,MNS_csp,MBH_csp
   
   INTEGER, DIMENSION(num_time+1) ::zmet_time
   REAL, DIMENSION(num_time+1,11) :: element_time
@@ -28,7 +29,7 @@ SUBROUTINE CSP_OUT(output_name)
   REAL, DIMENSION(num_time+1) :: Metal_s
   REAL, DIMENSION(num_time+1,11) :: element_s
 
-  CHARACTER(34) :: fmt
+  CHARACTER(100) :: fmt
   
   ! ------------------------------------------------------------------
   
@@ -39,7 +40,7 @@ SUBROUTINE CSP_OUT(output_name)
   spec_ssp = 0.
   mass_ssp = 0.
   lbol_ssp = 0.
-  mrem_ssp = 0.
+  !mrem_ssp = 0.
   Metal_ssp =0.
   mdwarf_ssp = 0.
   zmet_time = 0.
@@ -73,7 +74,7 @@ SUBROUTINE CSP_OUT(output_name)
      ! Generate composite stellar population properties  
      CALL csp_gen(i,zmet_time,element_time,age,mass_csp,mrem_csp,mdwarf_csp,&
                   lbol_csp,spec_csp,n_Ostars,n_Bstars,Metal_gas_csp,Metal_star_csp,&
-                  element_gas_csp,element_star_csp,Mgas_csp,SNIa_csp)
+                  element_gas_csp,element_star_csp,Mgas_csp,SNIa_csp,NNS_csp,NBH_csp,MNS_csp,MBH_csp)
 
      zmet_time(i+1)= MAX(locate(z_isoc,Metal_gas_csp),1)
      element_time(i+1,:) = element_gas_csp(:)
@@ -109,15 +110,18 @@ SUBROUTINE CSP_OUT(output_name)
  !---- print and save outputs in .mag and .spec files ------------
 
     ! Format for magnitudes file
-    fmt = '(F7.4,1x,9(F9.5,1x),000(F7.3,1x))'
-    WRITE(fmt(21:23),'(I3,1x,I4)') n_filtrs
+    !fmt = '(F7.4,1x,13(F9.5,1x),000(F7.3,1x))'
+    !WRITE(fmt(21:24),'(I3)') n_filtrs
+
+       
+    WRITE(fmt, '(A,I0,A)') '(F7.4,1x,13(F9.5,1x),', n_filtrs, '(F7.3,1x))' 
 
 
     ! Write magnitudes to file
     WRITE(10,fmt) LOG10(age) + 9.0, LOG10(mass_csp + small_value), &
         lbol_csp, LOG10(tsfr + small_value), LOG10(mrem_csp + small_value), &
         LOG10(mdwarf_csp + small_value), Metal_gas_csp, Metal_s(i),&
-        (Mgas_csp + small_value),SNIa_csp, mags  
+        (Mgas_csp + small_value),SNIa_csp,NNS_csp,NBH_csp,MNS_csp,MBH_csp,mags  
         
         
     ! Write spectra to file
@@ -160,6 +164,9 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
   !-----------------------------------------------------!
   IF(OB_stars==1)THEN  
      OPEN(25,FILE='../OUTPUTS/N_OBstars.txt',STATUS='REPLACE')
+     WRITE(25,'("#   log(age)   N_O(15–30 Msun)  N_O( 30–50 Msun)  N_O(50–70 Msun)&
+                     N_O(70–90 Msun) N_O(90–150 Msun)  N_B(2–5 Msun)  N_B(5–7 Msun)&
+                     N_B(7–9 Msun)  N_B(9–11 Msun)  N_B(11–15 Msun)")')
   ENDIF
    
   !------------------------------------------------------!
@@ -225,8 +232,9 @@ SUBROUTINE SETUP_OUTPUT(output_name, imin, imax)
 
   ! Write column headers for magnitudes
   WRITE(10,'("#")')
-  WRITE(10,'("#   log(age) log(mass) Log(lbol) log(SFR) log(mass_rem)&
-            log(mass_wd)  Z_gas Z_star  Mgas_csp  num_SNIa[1e-4]  mags (see FILTER_LIST)")')
+  WRITE(10,'("#   log(age) log(mass) Log(lbol) log(SFR) log(mass_rem) &
+            log(mass_wd)  Z_gas Z_star  Mgas_csp  num_SNIa[1e-4] &
+            num_NSs  num_BHs mass_NSs  mass_BHs  mags (see FILTER_LIST)")')
 
 
 !-----------------------------------------
