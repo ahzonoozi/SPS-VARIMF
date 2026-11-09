@@ -1,5 +1,6 @@
 SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,lbol_csp,spec_csp,&
-                   n_Ostars,n_Bstars,Metal_gas_csp,Metal_star_csp,element_gas_csp,element_star_csp,Mgas_csp,SNIa_csp)
+                   n_Ostars,n_Bstars,Metal_gas_csp,Metal_star_csp,element_gas_csp,&
+                   element_star_csp,Mgas_csp,SNIa_csp,NNS_csp,NBH_csp,MNS_csp,MBH_csp)
 
 
 
@@ -14,6 +15,8 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
 
    ! Outputs
   REAL(KIND(1.d0)), INTENT(OUT) :: mass_csp, mrem_csp, mdwarf_csp, lbol_csp
+  REAL(KIND(1.d0)), INTENT(OUT) :: NNS_csp,NBH_csp
+  REAL(KIND(1.d0)), INTENT(OUT) :: MNS_csp,MBH_csp
   REAL(KIND(1.d0)), INTENT(OUT) :: SNIa_csp
   REAL(KIND(1.d0)), INTENT(OUT) :: Metal_gas_csp, Mgas_csp, Metal_star_csp
   REAL(KIND(1.d0)), INTENT(OUT), DIMENSION(11) :: element_gas_csp
@@ -36,7 +39,8 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
   
   REAL(KIND(1.d0)), DIMENSION(nspec) :: spec1, spec2
   REAL(KIND(1.d0)), DIMENSION(num_time) :: mass_ssp,lbol_ssp,mrem_ssp,mdwarf_ssp,Metal_ssp,DTD,pnorm
-    REAL(KIND(1.d0)), DIMENSION(num_time,11) :: element_ssp
+  REAL(KIND(1.d0)), DIMENSION(num_time) :: NNS,NBH,mNS_ssp,mBH_ssp
+  REAL(KIND(1.d0)), DIMENSION(num_time,11) :: element_ssp
   REAL(KIND(1.d0)), DIMENSION(num_time, 5) :: N_O, N_B
   REAL(KIND(1.d0)), DIMENSION(nspec, num_time) :: spec_ssp
   
@@ -59,6 +63,13 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
   mass_csp = 0.0
   mrem_csp = 0.0
   mdwarf_csp = 0.0
+  NNS_csp = 0.0 
+  NBH_csp = 0.0
+  mNS_ssp = 0.0
+  mBH_ssp = 0.0
+  MNS_csp = 0.0
+  MBH_csp = 0.0
+
   lbol_csp = 0.0
   Metal_gas_csp = 0.0
   Metal_star_csp = 0.0
@@ -231,7 +242,8 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
 
 
      ! Generate SSP properties
-     CALL SSP_GEN(i,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ssp,element_ssp,N_O,N_B,pnorm)
+     CALL SSP_GEN(i,age,mass_ssp,mrem_ssp,mdwarf_ssp,lbol_ssp,spec_ssp,Metal_ssp,&
+                  element_ssp,N_O,N_B,pnorm,NNS,NBH,mNS_ssp,mBH_ssp)
 
      IF (sfh_type .EQ. 0) THEN
         mass_frac = 1./2.0
@@ -240,6 +252,8 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
      IF(t_tage .LT. 0.0) THEN
          mass_frac =0.0
      ENDIF
+
+     !test(i)= NNS
 
     !spec1 is spectra of young stars and spec2 is spectra of old stars
 
@@ -258,6 +272,12 @@ SUBROUTINE csp_gen(jj,zmet_time,element_time,tage,mass_csp,mrem_csp,mdwarf_csp,l
      mass_csp = mass_ssp(i) * mass_frac + mass_csp
      mrem_csp = mrem_ssp(i) * mass_frac + mrem_csp
      mdwarf_csp = mdwarf_ssp(i) * mass_frac + mdwarf_csp
+     NNS_csp = NNS(i) * mass_frac + NNS_csp
+     NBH_csp = NBH(i) * mass_frac + NBH_csp
+
+     MNS_csp = mNS_ssp(i) * mass_frac + MNS_csp
+     MBH_csp = mBH_ssp(i) * mass_frac + MBH_csp
+
      lbol_csp = 10.0**lbol_ssp(i) * mass_frac + lbol_csp
 
      Mass_norm = Mass_norm + mass_frac
